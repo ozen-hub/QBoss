@@ -13,6 +13,7 @@ let resultSheet=[];
 let correctAnswers=0;
 let wrongAnswers=0;
 let questionNumber=0;
+let answerState=false;
 
 // start login form js
 letsGetStarted = () => {
@@ -101,7 +102,8 @@ clearTime=()=>{
 }
 submitAnswer=()=>{
     requestAnswer = document.getElementById('requestAnswer').value;
-    if (isNaN(requestAnswer) || number1===0){
+    console.log(requestAnswer);
+    if (isNaN(requestAnswer) || number1===0 || requestAnswer===''){
         alert('please insert a number or start the game');
         return;
     }
@@ -109,11 +111,13 @@ submitAnswer=()=>{
     findAnswer();
     if (correctAnswer===Number(requestAnswer)){
         // set correct and incorrect values=========
+        answerState=true;
         correctAnswers++;
         document.getElementById('congrats').innerHTML='Congratulations';
         document.getElementById('congrats').style.color='#2980b9';
         document.getElementById('correctAnswers').innerHTML=correctAnswers;
     }else{
+        answerState=false;
         wrongAnswers++;
         document.getElementById('congrats').innerHTML=`Oops... (A : ${correctAnswer})`;
         document.getElementById('congrats').style.color='#D35400';
@@ -129,7 +133,7 @@ document.getElementById('question').innerHTML='Processing...'
 
     setTimeout(()=>{
            greeting();
-    }, 3000);
+    }, 100);
 }
 //============================
 
@@ -145,18 +149,23 @@ findAnswer=()=>{
 
 greeting=()=>{
     let result={
-        question_id:'',
+        question_id:questionNumber,
         question: question,
         request_answer: requestAnswer,
         answer: correctAnswer,
-        state:'',
+        state:answerState,
         time:time
     };
     resultSheet.push(result);
     //==== clear greeing
     document.getElementById('congrats').innerHTML='';
     document.getElementById('requestAnswer').value='';
-    generateQuestion();
+    if(questionNumber!==10){
+        generateQuestion();
+    }else{
+        console.log('done!');
+    }
+   
     console.log(resultSheet);
 }
 
