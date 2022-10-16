@@ -163,10 +163,26 @@ greeting=()=>{
     if(questionNumber!==10){
         generateQuestion();
     }else{
-        console.log('done!');
+      localStorage.setItem('result',JSON.stringify(resultSheet));
+      window.location.href = "result.html";
+      // reset all data ==> you will have to do this.
     }
-   
-    console.log(resultSheet);
+}
+
+setResult=()=>{
+    const data=JSON.parse(localStorage.getItem('result'));
+    for(const tempDataSet of data){
+        const element = document.getElementsByTagName('tbody')[0];
+        const newRow = `<tr>
+        <td>${tempDataSet.question_id}</td>
+         <td>${tempDataSet.question}</td>
+          <td>${tempDataSet.request_answer}</td>
+           <td>${tempDataSet.answer}</td>
+            <td>${tempDataSet.state}</td>
+             <td>${tempDataSet.time}</td>
+              </tr>`
+        element.innerHTML+=newRow;
+    }
 }
 
 // end game console js
