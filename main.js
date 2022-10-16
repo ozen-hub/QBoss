@@ -12,6 +12,7 @@ let correctAnswer=0;
 let resultSheet=[];
 let correctAnswers=0;
 let wrongAnswers=0;
+let questionNumber=0;
 
 // start login form js
 letsGetStarted = () => {
@@ -57,6 +58,9 @@ startGame=()=>{
     generateQuestion();
 }
 generateQuestion=()=>{
+    questionNumber++;
+    document.getElementById('questionNumber').innerHTML=questionNumber;
+
     clearTime();
     let selectedMax=checkLevel();
     number1=generateNumber(1,selectedMax);
